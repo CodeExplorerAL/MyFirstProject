@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購 With Me</title>
+    <link rel="icon" href="static/web_Icon.ico">
+    <!-- 1. 套用BootStrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <!-- 3. 引用font awesome -->
+    <script src="https://kit.fontawesome.com/1f05676929.js" crossorigin="anonymous"></script>
+
+
+    <style>
+        /* 2. 調整 頂端列 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 2-1. 調整 頂端列的 logo */
+        #header_logo {
+            width: 60%;
+            margin-left: 10%;
+            text-align: center;
+        }
+
+        /* 2-2. 調整 頂端列的 文字宣傳廣告 */
+        #advertisementText {
+            font-size: 1vw;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* 2-3. 調整 頂端列的 登入按鈕 */
+        a.login-btn {
+            text-decoration: none;
+            font-size: 20px;
+            color: rgb(43, 116, 226);
+            margin-top: 20px;
+        }
+
+        /* 2-3. 調整 點擊登入按鈕後導向的 會員登入畫面_文字 */
+        .modal-header h3 {
+            font-size: 24px;
+            color: rgb(0, 0, 0);
+            position: absolute;
+            top: 6%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 2-3. 調整 點擊登入按鈕後導向的 會員登入畫面 */
+        .modal-content {
+            background: rgb(30, 159, 96);
+            background: linear-gradient(0deg, rgba(30, 159, 96, 1) 0%, rgba(205, 189, 130, 1) 100%);
+        }
+
+        /* 2-3. 調整 點擊登入按鈕後導向的 會員登入畫面_輸入框*/
+        .modal-body form .account,
+        .modal-body form .password {
+            margin: 30px;
+            width: 80%;
+            border-radius: 20px;
+        }
+
+        /* 2-3. 調整 點擊登入按鈕後導向的 會員登入畫面_勾選框*/
+        .remember {
+            margin-bottom: 20px;
+            margin-right: 10px;
+        }
+
+        /* 2-3. 調整 點擊登入按鈕後導向的 會員登入畫面_登入鈕*/
+        .modal-body form .btn {
+            width: 100%;
+            font-size: 25px;
+            color: white;
+        }
+
+        /* 2-3. 調整 頂端列_登出按鈕 */
+        #logoutButton {
+            margin-left: 10px;
+            margin-top: 20px;
+            background-color: #9d9d9d;
+            border-color: #9d9d9d;
+        }
+
+        /* 2-3. 調整 頂端列_第三欄 */
+        .col-3 {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 4-1. 調整 電腦版導覽列_項目顏色 */
+        .navbar-nav li a {
+            color: #22c374;
+            font-size: 20px;
+        }
+
+        /* 4-1. 調整 電腦版導覽列_項目在鼠標碰觸時的改變 */
+        .navbar-nav li a:hover {
+            color: azure;
+            background-color: #1e9f60;
+            padding: 10px;
+        }
+
+        /* 4-1. 調整 手機版_清單符號 */
+        .navbar-toggler {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* 4-2. 調整搜尋框的寬度 */
+        nav .input-group {
+            width: 500px;
+        }
+
+        /* 4-3. 調整購物車和愛心icon */
+        .navbar-collapse.col-2 a {
+            margin-left: 10px;
+        }
+
+        /* 4. 調整手機用戶在使用時切換的樣式 */
+        @media (max-width:300px) {
+            nav {
+                height: 20px;
+            }
+        }
+
+
+        /* 5. 調整 廣告輪播圖 */
+        .MainCarousel_area {
+            margin-top: 110px;
+            padding: 40px;
+        }
+
+        /* 5. 調整 廣告輪播圖_在螢幕寬度小於 768px 時，調整 MainCarousel_area 的樣式 */
+        @media (max-width: 991px) {
+            .MainCarousel_area {
+                margin-top: 250px;
+                padding: 10px;
+            }
+        }
+
+        /* 5. 調整 廣告輪播圖_控制按鈕 */
+        .MainCarousel_area .carousel-control-prev,
+        .MainCarousel_area .carousel-control-next {
+            background-color: #1e9f60;
+        }
+
+        /* 5. 調整 廣告輪播圖_控制按鈕的 激活效果 */
+        .MainCarousel_area .carousel-control-prev:hover,
+        .MainCarousel_area .carousel-control-next:hover,
+        .MainCarousel_area .carousel-control-prev:focus,
+        .MainCarousel_area .carousel-control-next:focus {
+            background-color: #96c699;
+        }
+
+        /* 5. 調整 廣告輪播圖_控制按鈕 */
+        .MainCarousel_area .carousel-control-prev:not(:hover),
+        .MainCarousel_area .carousel-control-next:not(:hover) {
+            background-color: rgba(165, 205, 178, 0.5032606792717087);
+        }
+
+
+
+        /* 5. 調整 廣告輪播圖_控制按鈕內部箭頭*/
+        .MainCarousel_area .carousel-control-prev-icon,
+        .MainCarousel_area .carousel-control-next-icon {
+            border-radius: 2px;
+        }
+
+        /* 5. 調整 廣告輪播圖_活動指標 */
+        #carouselExampleIndicators .carousel-indicators button {
+            box-sizing: content-box;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            border: 3px solid #fff;
+            background-color: #333;
+        }
+
+        /* 5. 調整 廣告輪播圖_活動指標的 激活效果 */
+        #carouselExampleIndicators .carousel-indicators button.active {
+            background-color: #fff;
+            border-color: #333;
+        }
+
+
+        /* 6. 調整 產品輪播圖_產品處 */
+        .carousel-inner .carousel-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0s ease-in-out;
+        }
+
+        /* 6. 調整 產品輪播圖_產品處_啟用效果 */
+        .carousel-inner .carousel-item.active {
+            opacity: 1;
+        }
+
+        /* 6. 調整 產品輪播圖_產品處_圖片 */
+        .carousel-inner .carousel-item img {
+            width: 100%;
+        }
+
+        /* 6. 調整 產品輪播圖_輪播控制鈕_前後控制區塊(如要改箭頭 增加-icon) */
+        #myCarousel1 .carousel-control-prev,
+        #myCarousel1 .carousel-control-next,
+        #myCarousel2 .carousel-control-prev,
+        #myCarousel2 .carousel-control-next,
+        #myCarousel3 .carousel-control-prev,
+        #myCarousel3 .carousel-control-next {
+            background-color: #f8b1b1;
+            width: auto;
+        }
+
+        /* 6. 調整 產品輪播圖_控制按鈕 激活後恢復原色*/
+        #myCarousel1 .carousel-control-prev:not(:hover),
+        #myCarousel1 .carousel-control-next:not(:hover),
+        #myCarousel2 .carousel-control-prev:not(:hover),
+        #myCarousel2 .carousel-control-next:not(:hover),
+        #myCarousel3 .carousel-control-prev:not(:hover),
+        #myCarousel3 .carousel-control-next:not(:hover) {
+            background-color: #F1DFD1;
+        }
+
+        /* 6. 調整 產品輪播圖_輪播控制鈕_指標處 */
+        #myCarousel1 .carousel-indicators li,
+        #myCarousel2 .carousel-indicators li,
+        #myCarousel3 .carousel-indicators li {
+            background-color: #cfcfcf;
+            width: 10px;
+            height: 10px;
+        }
+
+        /* 6. 調整 產品輪播圖_輪播控制鈕_指標處_激活狀態 */
+        #myCarousel1 .carousel-indicators .active,
+        #myCarousel2 .carousel-indicators .active,
+        #myCarousel3 .carousel-indicators .active {
+            background-color: #9d9d9d;
+        }
+
+        /* 6. 調整 產品輪播圖_產品圖 */
+        .praductCarousel_productIMG {
+            position: relative;
+            border: 3px solid #d6ffc9;
+            border-radius: 2%;
+            overflow: hidden;
+        }
+
+        /* 6. 調整 產品輪播圖_倒數計時器 */
+        .countdown-timer {
+            position: absolute;
+            top: 2%;
+            right: 4%;
+            font-size: 0.6vw;
+            color: red;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 6. 調整 產品輪播圖_倒數計時器的 媒體狀態 */
+        @media (max-width: 768px) {
+            .countdown-timer {
+                font-size: 0.4vw;
+            }
+        }
+
+        /* 6. 調整 產品輪播圖_結束覆蓋層 */
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            display: none;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+
+        /* 6. 調整 產品輪播圖_產品圖超連結 */
+        .praductCarousel_productIMG a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        /* 6. 調整 產品輪播圖_產品圖超連結的 禁用狀態 */
+        .praductCarousel_productIMG a.disabled {
+            pointer-events: none;
+        }
+
+
+        /* 7. 調整 食譜宣傳圖 */
+        .container_homePage_receipt {
+            display: flex;
+            position: relative;
+            max-width: 100%;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5%;
+        }
+
+        /* 7. 調整 食譜宣傳圖_背景圖 */
+        .container_homePage_receipt img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* 7. 調整 食譜宣傳圖_宣傳文字 */
+        .homePage_receipt-text {
+            position: absolute;
+            top: 5px;
+            left: 60%;
+            color: black;
+            margin-top: 0.5vw;
+            font-size: 1.5vw;
+        }
+
+        /* 7. 調整 食譜宣傳圖_宣傳文字_字體 */
+        .homePage_receipt-text p {
+            font-weight: bold;
+        }
+
+        /* 7. 調整 食譜宣傳圖_按鈕 */
+        .overlay-btn {
+            background-color: #fdd22d;
+            color: white;
+            position: absolute;
+            border: none;
+            border-radius: 2vw;
+            top: 5%;
+            left: 77%;
+            font-size: 1.5vw;
+        }
+
+        /* 7. 調整 食譜宣傳圖_按鈕_連結 */
+        .overlay-btn a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 1.3vw;
+        }
+
+        /* 7. 調整 食譜宣傳圖_按鈕_激活效果 */
+        .overlay-btn a:hover {
+            color: rgb(1, 1, 1);
+            font-size: 1.5vw;
+        }
+
+
+        /* 8. 調整：訂閱區 */
+        .container_subscribe {
+            background: rgb(238, 174, 202);
+            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 5%;
+        }
+
+        /* 8. 調整：訂閱區_Email 輸入框 */
+        #subscribe_EmailInput {
+            font-size: 1em;
+            padding: 0.5em;
+            width: 70%;
+        }
+
+        /* 8. 調整：訂閱區_Email 按鈕 */
+        #subscribe_EmailButton {
+            margin: 10px;
+            padding: 0em;
+            width: 15%;
+        }
+
+
+        /* 9. 調整 尾端列 */
+        .footer-container {
+            width: 100%;
+            background-color: #f8f9fa;
+            margin-top: 5vw;
+            max-width: 100%;
+        }
+
+        /* 9. 調整 尾端列_表格 */
+        .table-no-border td,
+        .table-no-border th {
+            border: none;
+        }
+
+        /* 9. 調整 尾端列_連結 */
+        .table-no-border a {
+            color: black;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 9. 調整 尾端列_連結 激活效果 */
+        .table-no-border a:hover {
+            color: blue;
+        }
+
+
+        /* 10. 調整 一鍵置頂按鈕 */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 8%;
+            right: 1%;
+            background-color: rgba(207, 207, 207, 0.6615239845938375) 85%, ;
+            border: none;
+            border-radius: 50%;
+            padding: 15px 20px;
+
+        }
+
+        /* 10. 調整 一鍵置頂按鈕_激活效果 */
+        #scrollTopBtn:hover {
+            background: #cfcfcf;
+        }
+
+        /* 10. 調整 一鍵置頂按鈕_超連結 */
+        #scrollTopBtn a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <!-- 2. 製作 頂端列 -->
+    <header>
+        <div class="container_header">
+            <div class="row">
+                <!-- 2-1. 製作 頂端列_logo -->
+                <div class="col col-3 ">
+                    <a href="http://127.0.0.1:5500/homePage_FullVersion%E6%94%B9%E7%85%A7%E7%89%87%E8%B7%AF%E5%BE%91.html">
+                        <img id="header_logo" src="static/logo_購With Me.png" alt="Logo" class="img-fluid"></a>
+                </div>
+                <!-- 2-2. 製作 頂端列_廣告文宣 -->
+                <div class="col col-6">
+                    <span>
+                        <div id="advertisementText" style="font-size: 1.5vw;"></div>
+                        <!-- 製作 頂端列_廣告文宣_JS -->
+                        <script>
+                            const texts = [
+                                "賀 新店開幕 全店滿千折百，另送購物袋",
+                                "今日特惠商品：鮭魚 1公斤$499",
+                                "加入會員 立即領優惠9折券",
+                            ];
+                            let currentIndex = 0;
+                            const textElement = document.getElementById("advertisementText");
+                            function advertisementText() {
+                                textElement.textContent = texts[currentIndex];
+                                currentIndex = (currentIndex + 1) % texts.length;
+                            }
+                            advertisementText();
+                            setInterval(advertisementText, 3000);
+                        </script>
+                    </span>
+                </div>
+                <!-- 2-3. 製作 頂端列_登入/註冊會員鈕 -->
+                <div class="col col-3" style="text-align: center;">
+                    <a href="#" class="login-btn" type="button" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">登入/註冊</a>
+                    <button id="logoutButton" type="button" class="btn btn-danger"
+                        onclick="simulateLogout()">登出</button>
+                </div>
+            </div>
+        </div>
+        <!-- 2-3. 製作 頂端列_登入/註冊會員鈕_JS -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const logoutButton = document.getElementById('logoutButton');
+
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', simulateLogout);
+                }
+
+                const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+                const loginButton = document.querySelector('.login-btn');
+
+                if (isLoggedIn === 'true') {
+                    logoutButton.style.display = 'inline-block';
+                    loginButton.textContent = '已登入會員';
+                } else {
+                    logoutButton.style.display = 'none';
+                }
+            });
+
+            function simulateLogin() {
+                const loginButton = document.querySelector('.login-btn');
+                const logoutButton = document.getElementById('logoutButton');
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                // 模擬登入成功
+                if (email === '1' && password === '1') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    loginButton.textContent = '已登入會員';
+                    logoutButton.style.display = 'inline-block';
+
+                    const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    modal.hide();
+
+                    // 顯示登入成功訊息
+                    // alert('登入成功！');
+
+                    // 導向至指定網址
+                    window.location.href = './購 With Me.html';
+                } else {
+                    alert('登入失敗，請檢查帳號密碼！');
+                }
+            }
+
+            function simulateLogout() {
+                const loginButton = document.querySelector('.login-btn');
+                const logoutButton = document.getElementById('logoutButton');
+
+                sessionStorage.removeItem('isLoggedIn');
+                loginButton.textContent = '登入/註冊';
+                logoutButton.style.display = 'none';
+            }
+        </script>
+
+
+        <!-- 放置：導覽列 -->
+        <!-- 第一個是用來套表，第二個是將導覽列展開，第三個是主要用於定義導覽列元素的文本和圖標的顏色 第四個是背景顏色 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            <div class="container-fluid">
+                <!-- 第一欄，佔據 4 等分 -->
+                <div class="navbar-collapse col-5">
+                    <!-- 手機版 當網頁縮起來，換成清單圖示，第一個是定義導覽列的折疊切換按鈕，第三個是點擊時切換導覽列的顯示和隱藏狀態，第四個指定了要切換的導覽列的目標 ID-->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#linkbar">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </button>
+                    <!-- 電腦版 -->
+                    <div class="collapse navbar-collapse" id="linkbar">
+                        <ul class="navbar-nav me-auto">
+                            <ul class="navbar-nav  me-auto">
+                                <li><a class="dropdown-item" href="#">
+                                        <h4>全部商品</h4>
+                                    </a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);"
+                                        onclick="scrollToProductCarousel()">
+                                        <h4>團購商品</h4>
+                                    </a></li>
+                                <li><a class="dropdown-item" href="#">目錄</a></li>
+                                <li><a class="dropdown-item" href="#">活動</a></li>
+                                <li><a class="dropdown-item" href="#">食譜</a></li>
+                                <li><a class="dropdown-item" href="#">商店位置</a></li>
+                                <li><a class="dropdown-item" href="#">聯絡我們</a></li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 將導覽列中的團購商品連結至同頁面的開團商品位置 -->
+            <script>
+                function scrollToProductCarousel() {
+                    var element = document.getElementById('productCarousel');
+                    var offset = 50;
+                    var bodyRect = document.body.getBoundingClientRect().top;
+                    var elementRect = element.getBoundingClientRect().top;
+                    var offsetPosition = elementRect - bodyRect - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            </script>
+            
+
+
+            <!-- 放置：搜尋框-->
+            <div class="navbar-collapse col-5">
+                <a class="navbar-brand" href="#">
+                    <form class="input-group">
+                        <input class="form-control mx-2" type="search" placeholder="商品/食譜">
+                        <button class="btn btn-success" type="submit">搜尋</button>
+                    </form>
+                </a>
+            </div>
+
+
+
+            <!-- 放置：購物車與愛心 icon -->
+            <div class="navbar-collapse col-2">
+                <a href="#" style="text-decoration: none;"><i class="fa-solid fa-cart-shopping fa-lg"></i> </a>
+                &nbsp&nbsp&nbsp&nbsp<a href="#" style="text-decoration: none;"><i
+                        class="fa-solid fa-heart fa-lg"></i></a>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- 2-3. 製作 頂端列_登入/註冊會員鈕_導向後的會員登入 -->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>會員登入</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="account form-control" id="email" placeholder="請輸入E-Mail帳號">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="password form-control" id="password" placeholder="請輸入密碼">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" class="remember">記住我的密碼
+                        </div>
+                        <button type="button" class="btn btn-info" onclick="simulateLogin()"> 登入
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="signup">
+                        <span>尚未成為會員</span>
+                        <a href="#" type="button" class="member"> 立即加入 </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 5. 放置：輪播圖 -->
+    <!-- 第一個是輪播元件的唯一識別符，第二個是樣式類別，表示這是一個輪播元件，第三個是啟用自動輪播，使輪播可以自動切換 -->
+    <div class="MainCarousel_area">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <!-- 輪播的指示點，用於顯示當前輪播到的位置。每個圖片都對應一個指示點。 -->
+            <div class="carousel-indicators">
+                <!-- 第二個是指定這個按鈕要控制的輪播元件的 ID，第三個是指定指示點的索引 -->
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                    aria-label="Slide 5"></button>
+            </div>
+            <!-- 輪播的內容區域，即要顯示的圖片。 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="2000"><a href="#">
+                        <img src="./static/ads_Carousel_IMG_1 brochure_edit(use).png" class="d-block w-75 mx-auto"
+                            alt="廣告圖1"></a>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000"><a href="#">
+                        <img src="./static/ads_Carousel_IMG_2 strawberry_edit(use).png" class="d-block w-75 mx-auto"
+                            alt="廣告圖2"></a>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000"><a href="#">
+                        <img src="./static/ads_Carousel_IMG_3 vegetable_edit(use).png" class="d-block w-75 mx-auto"
+                            alt="廣告圖3"></a>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000"><a href="#">
+                        <img src="./static/ads_Carousel_IMG_4 steak_edit(use).png" class="d-block w-75 mx-auto" alt="廣告圖4">
+                </div>
+                <div class="carousel-item" data-bs-interval="2000"><a href="#">
+                        <img src="./static/ads_Carousel_IMG_5 Chinese New Year_edit(use).png" class="d-block w-75 mx-auto"
+                            alt="廣告圖5"></a>
+                </div>
+            </div>
+            <!-- 加入：控制箭頭按鈕 -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- 6. 放置：產品輪播圖 200*200-->
+    <div class="container container_productCarousel">
+        <table class="table" style="width: 100%;">
+            <tbody>
+                <!-- 6-1. 加入：產品輪播圖_開團商品-->
+                <tr>
+                    <td>
+                        <img class="img-fluid" style="width: 100%; margin-top: 30%"
+                            src="./static/productCarousel_IMG_開團商品(使用).png" alt="開團商品主圖">
+                    </td>
+                    <td>
+                        <div id="myCarousel1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+                            <!-- 開團商品_指標處 -->
+                            <ol class="carousel-indicators">
+                                <li data-bs-target="#myCarousel1" data-bs-slide-to="0" class="active"></li>
+                                <li data-bs-target="#myCarousel1" data-bs-slide-to="1"></li>
+                            </ol>
+
+                            <!-- 開團商品_產品處 -->
+                            <div class="carousel-inner">
+                                <div id="productCarousel" class="carousel-item active">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖1 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product1">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_1 草莓_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_1">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown1"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay1">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖2 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product2">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_2 蠔菇_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_2">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown2"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay2">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖3 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product3">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_3 新鮮雞蛋-edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_3">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown3"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay3">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖4 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product4">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_4 紐西蘭奶粉edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_4">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown4"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay4">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖5 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product5">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_5 放養雞_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_5">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown5"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay5">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖6 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product6">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_6 冷凍山竹_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_6">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown6"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay6">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖7 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product7">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_7 手磨豆槳_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_7">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown7"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay7">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖8 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product8">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_8 澳洲龍蝦_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_8">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown8"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay8">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖9 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product9">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_9  生乳捲(咖啡煉乳)_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_9">
+
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown9"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay9">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖10 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product10">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_團購商品_10 墨爾本精選咖啡豆_edit(使用).png"
+                                                        alt="productCarousel_IMG_團購商品_10">
+                                                    <!-- 倒數計時器 -->
+                                                    <div class="countdown-timer" id="countdown10"></div>
+                                                    <!-- 已結束覆蓋層 -->
+                                                    <div class="countdown-overlay" id="overlay10">已結束</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 開團商品_輪播控制鈕 -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel1"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel1"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 6-1. 加入 開團商品_倒計時 -->
+                <script>
+                    // 設定結束時間為每個產品的截止時間
+                    const endTimes = [
+                        new Date('February 7, 2024 20:00:00'),
+                        new Date('January 2, 2024 18:30:00'),
+                        new Date('January 3, 2024 18:30:00'),
+                        new Date('January 4, 2024 18:30:00'),
+                        new Date('May 15, 2024 18:30:00'),
+                        new Date('January 6, 2024 18:30:00'),
+                        new Date('January 7, 2024 18:30:00'),
+                        new Date('January 8, 2024 18:30:00'),
+                        new Date('May 19, 2024 18:30:00'),
+                        new Date('January 10, 2024 18:30:00')
+                    ];
+
+                    function updateCountdown() {
+                        for (let i = 0; i < endTimes.length; i++) {
+                            const now = new Date();
+                            const difference = endTimes[i] - now;
+
+                            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                            const countdownElement = document.getElementById(`countdown${i + 1}`);
+                            const overlayElement = document.getElementById(`overlay${i + 1}`);
+                            const productElement = document.getElementById(`product${i + 1}`);
+
+                            if (difference > 0) {
+                                countdownElement.innerHTML = `${days}天 ${hours}小時 ${minutes}分鐘 ${seconds}秒`;
+                            } else {
+                                countdownElement.style.display = 'none';
+                                overlayElement.style.display = 'flex';
+                                productElement.classList.add('disabled');
+                            }
+                        }
+                    }
+
+                    setInterval(updateCountdown, 1000);
+                    updateCountdown();
+                </script>
+
+
+                <!-- 6-2. 加入：產品輪播圖_特惠商品-->
+                <tr>
+                    <td>
+                        <img class="img-fluid" style="width: 100%; margin-top: 30%"
+                            src="./static/productCarousel_IMG_特惠商品(使用).png" alt="特惠商品主圖">
+                    </td>
+                    <td>
+                        <div id="myCarousel2" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+                            <!-- 特惠商品_指標處 -->
+                            <ol class="carousel-indicators">
+                                <li data-bs-target="#myCarousel2" data-bs-slide-to="0" class="active"></li>
+                                <li data-bs-target="#myCarousel2" data-bs-slide-to="1"></li>
+                            </ol>
+
+                            <!-- 特惠商品_產品處 -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖1 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product1">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_1 魚_edit(使用).png" alt="productCarousel_IMG_特惠商品_1">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖2 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product2">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_2 湯圓_edit(使用).png" alt="productCarousel_IMG_特惠商品_2">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖3 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product3">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_3 牛排_edit(使用).png" alt="productCarousel_IMG_特惠商品_3">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖4 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product4">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_4 櫛瓜_edit(使用).png" alt="productCarousel_IMG_特惠商品_4">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖5 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product5">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_5 薯片_edit(使用).png" alt="productCarousel_IMG_特惠商品_5">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖6 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product6">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_6 壽司米_edit(使用).png" alt="productCarousel_IMG_特惠商品_6">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖7 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product7">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_7 清湯掛麵_edit(使用).png" alt="productCarousel_IMG_特惠商品_7">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖8 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product8">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_8 起士_edit(使用).png" alt="productCarousel_IMG_特惠商品_8">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖9 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product9">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_9 牛奶_edit(使用).png" alt="productCarousel_IMG_特惠商品_9">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖10 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product10">
+                                                    <!-- 產品圖內容 -->
+                                                    <img src="./static/productCarousel_IMG_特惠商品_10 洗衣精_edit(使用).png" alt="productCarousel_IMG_特惠商品_10">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 特惠商品_輪播控制鈕 -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel2"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel2"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 6-3. 加入：產品輪播圖_熱銷商品-->
+                <tr>
+                    <!-- 熱銷商品_指示圖 -->
+                    <td>
+                        <img class="img-fluid" style="width: 100%; margin-top: 30%"
+                            src="./static/productCarousel_IMG_熱銷商品(使用).png" alt="熱銷商品主圖">
+                    </td>
+                    <td>
+                        <div id="myCarousel3" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+                            <!-- 熱銷商品_指標處 -->
+                            <ol class="carousel-indicators">
+                                <li data-bs-target="#myCarousel3" data-bs-slide-to="0" class="active"></li>
+                                <li data-bs-target="#myCarousel3" data-bs-slide-to="1"></li>
+                            </ol>
+
+                            <!-- 熱銷商品_產品圖 -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖1 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product1">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_1 肉片_edit(使用).png" alt="productCarousel_IMG_熱銷商品_1">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖2 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product2">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_2 佛跳牆_edit(使用).png" alt="productCarousel_IMG_熱銷商品_2">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖3 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product3">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_3 烏冬_edit(使用).png" alt="productCarousel_IMG_熱銷商品_3">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖4 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product4">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_4 炸雞_edit(使用).png" alt="productCarousel_IMG_熱銷商品_4">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖5 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product5">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_5 醬烤豬肋排_edit(使用).png" alt="productCarousel_IMG_熱銷商品_5">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖6 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product6">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_6 火山排骨_edit(使用).png" alt="productCarousel_IMG_熱銷商品_6">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖7 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product7">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_7 銅鑼燒_edit(使用).png" alt="productCarousel_IMG_熱銷商品_7">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖8 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product8">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_8 挪威鮭魚_edit(使用).png" alt="productCarousel_IMG_熱銷商品_8">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖9 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product9">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_9 手工奶油小餅乾_edit(使用).png" alt="productCarousel_IMG_熱銷商品_9">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <!-- 加入 產品輪播圖_產品圖10 -->
+                                            <div class="praductCarousel_productIMG">
+                                                <a href="#" class="productIMG" id="product10">
+                                                    <img src="./static/productCarousel_IMG_熱賣商品_10 榴槤冰_edit(使用).png" alt="productCarousel_IMG_熱銷商品_10">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 熱銷商品_輪播控制鈕 -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel3"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel3"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+    <!-- 7. 放置：食譜宣傳圖 -->
+    <div class="container_homePage_receipt">
+        <!-- 6. 加入 食譜_宣傳圖 -->
+        <img src="./static/receipt_backgroundIMG_縮小尺寸(使用於網頁).png" alt="食譜圖">
+        <div class="homePage_receipt-text">
+            <p>又不知道該吃什麼嗎？
+                <br>點擊查閱獲取更多想法！
+            </p>
+        </div>
+        <!-- 6. 加入 食譜_連結按鈕 -->
+        <div class="homePage_receipt-btn">
+            <button class="overlay-btn"><a href="https://www.google.com.tw/?hl=zh_TW">查閱食譜</a></button>
+        </div>
+    </div>
+
+
+    <!-- 8. 放置：訂閱區 分成三等份-->
+    <div class="container-fluid container_subscribe ">
+        <div class="row" style="width: 100%;">
+
+            <!-- 8. 放置：訂閱區_email-->
+            <div class="col-md-4">
+                <div class="subscribe_Email">
+                    <h3><i style="padding-top: 10px;" class="fa-regular fa-bell"></i>加入我們，不錯過任何優惠</h3>
+                    <br>
+                    <form id="emailForm" class="row">
+                        <label for="email">
+                            <h5>Email:</h5>
+                            <input type="email" class="form-control custom-input" id="subscribe_EmailInput" name="email"
+                                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="請輸入email">
+                        </label>
+                        <button type="submit" id="subscribe_EmailButton"
+                            class="btn btn-primary custom-button">提交</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 8. 放置：訂閱區_Line QRcode -->
+            <div class="col-md-4 text-center">
+                <div style="padding-top: 8%;max-width: 100%" class="subscribe_LinqQRcode">
+
+                    <h2><img src="./static/LINE-Friend-QRCODE.jpg" alt="Line_QRcodeIMG"></h2>
+                </div>
+            </div>
+
+            <!-- 8. 放置：訂閱區_App下載 -->
+            <div class="col-md-4 text-center">
+                <div style="width: 0.5w;" class="subscribe_APPDownloda">
+                    <br>
+                    <br>
+                    <a href="itms-apps://?action=discover&referrer=app-store&itscg=10000&itsct=app-appstore-nav-200917">
+                        <img src="./static/homePage_Subcribe_downloadApple(使用).png" alt="Apple_downloadIMG">
+                    </a>
+                    <br>
+                    <br>
+                    <a href="https://play.google.com/store/apps">
+                        <img src="./static/homePage_Subcribe_downloadGoogle(使用).png" alt="Google_downloadIMG">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 9. 放置：尾端列-->
+    <footer>
+        <div class="container footer-container">
+            <div class="row">
+                <!-- 9. 放置 尾端列_表格(8等分)-->
+                <div class="col-sm-8">
+                    <table class="table table-no-border table-success ">
+                        <tr>
+                            <th>
+                                <h5>會員資料</h5>
+                            </th>
+                            <th>
+                                <h5>關於我們</h5>
+                            </th>
+                            <th>
+                                <h5>顧客服務</h5>
+                            </th>
+                            <th>
+                                <h5>商品</h5>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td><a href="#">會員資料</a></td>
+                            <td><a href="#">關於我們</a></td>
+                            <td><a href="#">需要幫助</a></td>
+                            <td><a href="#">冷凍海鮮</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">訂單資料</a></td>
+                            <td><a href="#">企業合作</a></td>
+                            <td><a href="#">Q&A</a></td>
+                            <td><a href="#">冷凍肉品</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">瀏覽紀錄</a></td>
+                            <td rowspan="5"></td>
+                            <td><a href="#">運送方式</a></td>
+                            <td><a href="#">冷凍蔬菜</a></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4"></td>
+                            <td><a href="#">運送查詢</a></td>
+                            <td><a href="#">常溫用品</a></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"></td>
+                            <td><a href="#">新鮮水果</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">生活用品</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">其他商品</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+                <!-- 9. 放置 尾端列_提醒標語(4等分)-->
+                <div class="col-sm-4">
+                    <div class="alert alert-warning">
+                        <strong>提醒：</strong>請注意防範詐騙！
+                        <ul>
+                            <li>不要輕易透露個人資訊，特別是銀行帳戶和密碼。</li>
+                            <li>警惕來自陌生人的電話、簡訊或電子郵件，尤其是涉及金錢或敏感資訊的。</li>
+                            <li>不要隨意點擊可疑的連結或下載未知來源的檔案。</li>
+                            <li>保持警惕，如果遇到可疑情況，請及時報告給相關機構。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+
+    <!-- 10. 放置：一鍵到頂 -->
+    <a href="#"><button id="scrollTopBtn"><i class="fa-solid fa-arrow-up"></i></button></a>
+
+
+    <!-- 11. 放置：Live Chat 使用Tawk.to -->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/658b0ef707843602b805b084/1hijj4v1i';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+
+
+</body>
+
+</html>
